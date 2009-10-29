@@ -1,0 +1,165 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Bowtie - module that creates object representing Bowtie alignment files</title>
+<link rel="stylesheet" href="styles/perldoc.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:_postfix@neige.apple.com" />
+</head>
+
+<body>
+
+
+<!-- INDEX BEGIN -->
+<div name="index">
+<p><a name="__index__"></a></p>
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#author">AUTHOR</a></li>
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<li><a href="#methods">METHODS</a></li>
+	<li><a href="#see_also">SEE ALSO</a></li>
+</ul>
+
+<hr name="index" />
+</div>
+<!-- INDEX END -->
+
+<p>
+</p>
+<h1><a name="name">NAME</a></h1>
+<p>Bowtie - module that creates object representing Bowtie alignment files</p>
+<p>
+</p>
+<hr />
+<h1><a name="author">AUTHOR</a></h1>
+<p>Dan MacLean (<a href="mailto:dan.maclean@tsl.ac.uk">dan.maclean@tsl.ac.uk</a>)</p>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<pre>
+        use Solexa::Bowtie;
+        my $bwt = new bowtie($bowtie_line);
+        print $bwt-&gt;readname; #prints out the reads name in this alignment
+        print $bwt-&gt;readseq; #prints the reads sequence</pre>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p>Bowtie is an NGS alignment program. This module creates an object that allows you to access the individual parts of the alignment
+entry very easily. To create the object you must provide it with a single line from the Bowtie output file. This module is really 
+designed to be used with the Solexa::Parser module that will create the objects automatically. Further methods will be created 
+soon.</p>
+<p>
+</p>
+<hr />
+<h1><a name="methods">METHODS</a></h1>
+<dl>
+<dt><strong><a name="new" class="item">new(line)</a></strong>
+
+<dd>
+<p>Creates a new Bowtie object</p>
+</dd>
+<dd>
+<pre>
+        $line = 'line-from-a-bowtie-file';
+        $bwt = new Bowtie($line);</pre>
+</dd>
+</li>
+<dt><strong><a name="readname" class="item"><code>readname()</code></a></strong>
+
+<dd>
+<p>Returns the readname of the alignment</p>
+</dd>
+<dd>
+<pre>
+        print $readname-&gt;readname;   #prints the id of the read in the alignment'</pre>
+</dd>
+</li>
+<dt><strong><a name="strand" class="item"><code>strand()</code></a></strong>
+
+<dd>
+<p>Returns the strand of the alignment</p>
+</dd>
+<dd>
+<pre>
+        print $bwt-&gt;strand;</pre>
+</dd>
+</li>
+<dt><strong><a name="targetname" class="item"><code>targetname()</code></a></strong>
+
+<dd>
+<p>Returns the name of the target</p>
+</dd>
+<dd>
+<pre>
+        print $bwt-&gt;targetname;</pre>
+</dd>
+</li>
+<dt><strong><a name="alignstart" class="item"><code>alignstart()</code></a></strong>
+
+<dd>
+<p>Returns the start of the alignment on the reference</p>
+</dd>
+<dd>
+<pre>
+        print $bwt-&gt;alignstart();</pre>
+</dd>
+</li>
+<dt><strong><a name="readseq" class="item"><code>readseq()</code></a></strong>
+
+<dd>
+<p>Returns the sequence of the read</p>
+</dd>
+<dd>
+<pre>
+        print $bwt-&gt;readseq()</pre>
+</dd>
+</li>
+<dt><strong><a name="readqual" class="item"><code>readqual()</code></a></strong>
+
+<dd>
+<p>Returns the read qualities;</p>
+</dd>
+<dd>
+<pre>
+        print $bwt-&gt;readqual;</pre>
+</dd>
+</li>
+<dt><strong><a name="other_alignments" class="item"><code>other_alignments()</code></a></strong>
+
+<dd>
+<p>Returns the number of other alignments this read is involved in</p>
+</dd>
+<dd>
+<pre>
+        print $bwt-&gt;other_alignments;</pre>
+</dd>
+</li>
+<dt><strong><a name="mismatches" class="item"><code>mismatches()</code></a></strong>
+
+<dd>
+<p>Returns a hash describing any mismatches that occured between the read and the reference in this alignment, if no mismatches occur
+returns 0</p>
+</dd>
+<dd>
+<pre>
+        my %mismatches = $bwt-&gt;mismatches;
+        --more detail Daniel!--</pre>
+</dd>
+</li>
+</dl>
+<p>
+</p>
+<hr />
+<h1><a name="see_also_solexa__parser">SEE ALSO
+Solexa::Parser</a></h1>
+
+</body>
+
+</html>

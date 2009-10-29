@@ -1,0 +1,35 @@
+/*
+perldoc for module documentation
+
+Created by macleand on 2009-10-23.
+Copyright (c) 2009 __MyCompanyName__. All rights reserved.
+*/
+
+	body {
+		background-color: #fff; /*white*/
+		color: #333; /* dark grey for most text*/
+		font-family: helvetica, sans-serif;
+		font-size: 100%;
+		height: 100%;
+	}
+	h1, h2 {
+		color: #0092BA;
+		padding: 5px;
+	}
+	h3, h4, h5 {
+
+		color: #0092BA;
+		padding: 5px;
+		font-style: italic;
+	}
+	a:link,a:visited {
+		color: #0092ba;
+		font-style: bold;
+		
+	}
+	
+	a:hover, a:active{
+		color: #ffbb00;
+		font-style: bold;
+
+	}

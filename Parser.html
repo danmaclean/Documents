@@ -1,0 +1,122 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Solexa::Parser - module to allow easy reading of different file formats in use at TSL.</title>
+<link rel="stylesheet" href="styles/perldoc.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:_postfix@neige.apple.com" />
+</head>
+
+<body>
+
+
+<!-- INDEX BEGIN -->
+<div name="index">
+<p><a name="__index__"></a></p>
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#author">AUTHOR</a></li>
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<li><a href="#requires">REQUIRES</a></li>
+	<li><a href="#methods">METHODS</a></li>
+	<li><a href="#see_also">SEE ALSO</a></li>
+</ul>
+
+<hr name="index" />
+</div>
+<!-- INDEX END -->
+
+<p>
+</p>
+<h1><a name="name">NAME</a></h1>
+<p>Solexa::Parser - module to allow easy reading of different file formats in use at TSL.</p>
+<p>
+</p>
+<hr />
+<h1><a name="author">AUTHOR</a></h1>
+<p>Dan MacLean (<a href="mailto:dan.maclean@tsl.ac.uk">dan.maclean@tsl.ac.uk</a>)</p>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<pre>
+        use Solexa::Parser;
+        my $parser = new Parser(-format=&gt;'fastq', -file=&gt;'my_solexa_data.fq');
+        while(my $fastq = $parser-&gt;next){</pre>
+<pre>
+                print $fastq-&gt;seq; #prints out the sequence line
+                print $fastq-&gt;qual_id; #prints the quality line id
+        }</pre>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p>This module allows you to create a datastream of the individual records in different file formats, so that you dont need to know
+how to parse them. You tell the parser in the new command what sort of file you want to use and the file name and it passes one record
+at a time back to you. What you can do with that record depends on exactly what sort of file you had in the first place. You can
+use Solexa::Fastq methods with a Fastq file, Solexa::Bowtie methods, with a bowtie file and so on.</p>
+<p>
+</p>
+<hr />
+<h1><a name="requires">REQUIRES</a></h1>
+<p>Solexa::Parser relies on the following modules being present
+Solexa::Bowtie
+Solexa::Fastq
+Solexa::Soap</p>
+<p>
+</p>
+<hr />
+<h1><a name="methods">METHODS</a></h1>
+<dl>
+<dt><strong><a name="new" class="item">new(-file=&gt; &quot;somefile&quot;, -format=&gt;'x')</a></strong>
+
+<dd>
+<p>Creates a new Parser object of format 'x', where x can be ONE of 'fastq' or 'bowtie' or 'soap'</p>
+</dd>
+<dd>
+<pre>
+        $file = '/home/myhome/fastq/my_solexa_data.fq';
+        $parser = new Parser(-file=&gt;$file, -format=&gt;'fastq');</pre>
+</dd>
+</li>
+<dt><strong><a name="next" class="item"><code>next()</code></a></strong>
+
+<dd>
+<p>Returns the next record from the file</p>
+</dd>
+<dd>
+<pre>
+        $fastq = $parser-&gt;next;</pre>
+</dd>
+<dd>
+<p>Use in a while loop to go through every record in the input file</p>
+</dd>
+<dd>
+<pre>
+        while ($fastq = $parser-&gt;next){</pre>
+</dd>
+<dd>
+<pre>
+                #do something in here...</pre>
+</dd>
+<dd>
+<pre>
+        }</pre>
+</dd>
+</li>
+</dl>
+<p>
+</p>
+<hr />
+<h1><a name="see_also">SEE ALSO</a></h1>
+<p>Solexa::Fastq
+Solexa::Bowtie
+Solexa::Soap</p>
+
+</body>
+
+</html>

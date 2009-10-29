@@ -1,0 +1,153 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Sequences - a module that includes code for dealing with sequences of different formats commonly used in proteomics</title>
+<link rel="stylesheet" href="styles/perldoc.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:_postfix@neige.apple.com" />
+</head>
+
+<body>
+
+
+<!-- INDEX BEGIN -->
+<div name="index">
+<p><a name="__index__"></a></p>
+
+<ul>
+
+	<li><a href="#author">AUTHOR</a></li>
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<li><a href="#methods">METHODS</a></li>
+	<li><a href="#see_also">SEE ALSO</a></li>
+</ul>
+
+<hr name="index" />
+</div>
+<!-- INDEX END -->
+
+<p>
+</p>
+<h1><a name="author">AUTHOR</a></h1>
+<p>Dan MacLean (<a href="mailto:dan.maclean@tsl.ac.uk">dan.maclean@tsl.ac.uk</a>)</p>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<pre>
+        use PhosphoTools::Sequences;</pre>
+<pre>
+        my $pep_mod = 'APEPTIDE[pS]EQUENCE';
+        my $cleaned_pep = Sequences::clean_up_sequence($pep_mod);
+        print $pep_mod; #prints APEPTIDESEQUENCE</pre>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p>The Sequence module contains code for completing various tasks with peptide sequences.</p>
+<p>
+</p>
+<hr />
+<h1><a name="methods">METHODS</a></h1>
+<dl>
+<dt><strong><a name="clean_up_sequence" class="item">clean_up_sequence(annotated_peptide_sequence)</a></strong>
+
+<dd>
+<p>Removes the phosphopeptide annotation from an annotated sequence</p>
+</dd>
+<dd>
+<pre>
+        my $pep_mod = 'APEPTIDE[pS]EQUENCE';
+        my $cleaned_pep = Sequences::clean_up_sequence($pep_mod);
+        print $pep_mod; #prints APEPTIDESEQUENCE</pre>
+</dd>
+</li>
+<dt><strong><a name="find_peptides_posn_on_protein" class="item">find_peptides_posn_on_protein(peptide, protein)</a></strong>
+
+<dd>
+<p>When provided with a (cleaned) peptide and a protein sequence, returns the start and end position on the protein of the first exact match as an array.</p>
+</dd>
+<dd>
+<pre>
+        my $pep = 'ROT';
+        my $protein = 'APROTEINSEQUENCE';
+        my @posns = Sequence::find_peptides_posn_on_protein($pep,$protein);
+        print $posns[0], &quot; &quot;, $posns[1]; #prints 3 5</pre>
+</dd>
+</li>
+<dt><strong><a name="get_residue_positions" class="item">get_residue_positions(residue, protein)</a></strong>
+
+<dd>
+<p>When provided with a single letter amino acid and a protein, will return a hash with keys that are the numeric positions of the residue in that protein</p>
+</dd>
+<dd>
+<pre>
+        my $res = 'E';
+        my $protein = 'APROTEINSEQUENCE
+        my %residue_positions = Sequence::get_residue_positions($res, $protein);
+        print keys %residue_positions; #prints 6, 10, 13 and 16 in no particular order</pre>
+</dd>
+</li>
+<dt><strong><a name="get_phossite_positions" class="item">get_phossite_positions(protein, annotated_peptide, start_on_prot, end_on_prot, type )</a></strong>
+
+<dd>
+<p>When provided with an a protein, annotated peptide sequence, the position on the protein where the peptide starts and ends and a type of phosite this
+will return a hash of the phosite positions in the protein. 
+The type argument is the type of phossite to look at, either 'ambiguous' (use 'a') or definite (use 'd')</p>
+</dd>
+<dd>
+<pre>
+        my $protein = 'APROTEINSEQUENCE';
+        my $anno_pep = '[pT]EIN[pS]EQ;
+        my $start = 5;
+        my $end = 12;
+        my %phossite_positions = Sequence::get_phossite_postions($protein, $anno_pep, $start, $end, 'd');
+        print keys %phossite_positions; # prints 5 and 9</pre>
+</dd>
+</li>
+<dt><strong><a name="get_phossite_positions_specific_and_ambiguous" class="item"><code>get_phossite_positions_specific_and_ambiguous()</code></a></strong>
+
+<dd>
+<p>As for <a href="#get_phossite_positions"><code>get_phossite_positions()</code></a> but lacks the type argument, returns positions for all annotated phossites.</p>
+</dd>
+</li>
+<dt><strong><a name="make_alignment" class="item">make_alignment(protein, annotated_peptide)</a></strong>
+
+<dd>
+<p>Returns a hash of 13 aa long peptides drawn from the parent sequence of a peptide and aligned around with the phossite at the centre.
+if you give a set of phoscalc style probability scores it will generate the peptide alignments for all possible phossites over the 1e-06 arbitrary cutoff. 
+If you provide a best guess or phosphat formatted definitive format sequence ie PEP[pT]IDE then it will use just the definitive phos positions
+NB the [p character is diagnostic of the best guess or phosphat format, if your sequence lacks this the code will think it is phoscalc.</p>
+</dd>
+<dd>
+<pre>
+        my $seq = 'AVERYLONGPROTEINSEQ;
+        my $ptm_line = O[pT]EIN; ## or phoscalc alternative
+        my %alignments = Sequence::make_alignments($seq, $ptm_line);
+        print keys %alignments; #prints ONGPROTEINSEQ</pre>
+</dd>
+</li>
+<dt><strong><a name="get_motif_alignment_from_position" class="item">get_motif_alignment_from_position(protein, position)</a></strong>
+
+<dd>
+<p>Returns a single sub-sequence of 13 aas centered around a provided position, when provided with the protein	and position</p>
+</dd>
+<dd>
+<pre>
+        my $seq = 'AVERYLONGPROTEINSEQ';
+        my $al = Sequence::make_alignments($seq, $pos);
+        print $al; ##prints ONGPROTEINSEQ</pre>
+</dd>
+</li>
+</dl>
+<p>
+</p>
+<hr />
+<h1><a name="see_also_phosphotools__formatters__phosphotools__parsers__bio__seqio_">SEE ALSO
+PhosphoTools::Formatters; PhosphoTools::Parsers; Bio::SeqIO;</a></h1>
+
+</body>
+
+</html>

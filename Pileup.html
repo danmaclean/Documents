@@ -1,0 +1,252 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Pileup - module that creates object representing maq format pileup files. Will soon include methods for converting bowtie and SOAP
+alignments into the pileup format for easy later analysis.</title>
+<link rel="stylesheet" href="styles/perldoc.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:_postfix@neige.apple.com" />
+</head>
+
+<body>
+
+
+<!-- INDEX BEGIN -->
+<div name="index">
+<p><a name="__index__"></a></p>
+
+<ul>
+
+	<li><a href="#author">AUTHOR</a></li>
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<li><a href="#methods">METHODS</a></li>
+	<li><a href="#see_also">SEE ALSO</a></li>
+</ul>
+
+<hr name="index" />
+</div>
+<!-- INDEX END -->
+
+<p>
+</p>
+<h1><a name="author">AUTHOR</a></h1>
+<p>Dan MacLean (<a href="mailto:dan.maclean@tsl.ac.uk">dan.maclean@tsl.ac.uk</a>)</p>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<pre>
+        use Solexa::Pileup;
+        my $pileup = new Pileup(/home/macleand/Desktop/mypile);</pre>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p>Pileup is the text based generic, easy to read output from the maq series of alignment programs. The format allows simple representation of
+alignments, describing only the depth of coverage at each position on a reference sequence, the reference sequence itself and the 
+and the identities of nucleotides that align over that position. It does not record anything to do with quality scores or anything to do
+with the actual reads that make up the alignment, like identity or mate pairs.</p>
+<p>
+</p>
+<hr />
+<h1><a name="methods">METHODS</a></h1>
+<dl>
+<dt><strong><a name="new" class="item">new(pileup_file)</a></strong>
+
+<dd>
+<p>Creates a new Pileup object. The first time you run this method it creates an index of the file. The index allows it to access the different
+bits describing each contig without running through the whole file. You can save this index by calling the <a href="#pickle"><code>pickle()</code></a> method, which stores
+This method runs for a long time. Try to use it once, the first time you make a file and then use the <a href="#pickle"><code>pickle()</code></a> and <a href="#retrieve_pickle"><code>retrieve_pickle()</code></a>.</p>
+</dd>
+<dd>
+<pre>
+        $file = '/home/macleand/Desktop/pileup_file.txt'
+        $pileup = new Pileup($file);</pre>
+</dd>
+</li>
+<dt><strong><a name="pickle" class="item">pickle(outfile)</a></strong>
+
+<dd>
+<p>Creates a pickled (binarised version of the Pileup object) Pileup file and writes it to disk.</p>
+</dd>
+<dd>
+<pre>
+        my $outfile = '/home/macleand/Desktop/my_pileup.pickled';
+        $pileup-&gt;pickle($outfile);</pre>
+</dd>
+</li>
+<dt><strong><a name="retrieve_pickle" class="item">retrieve_pickle</a></strong>
+
+<dd>
+<p>Retrieves a pickled Pileup from disk, note that this is not an object method, call in the manner of subroutines, will return a
+pileup object. Alternatively you can use the Perl standard module Storable::retrieve();</p>
+</dd>
+<dd>
+<pre>
+        my $pickled_file = '/home/macleand/Desktop/my_pileup.pickled';
+        my $pileup = Pileup::retrieve_pickled($pickled_file);</pre>
+</dd>
+<dd>
+<pre>
+        #or ..
+        use Storable;
+        my $pileup = Storable::retrieve($pickled_file);</pre>
+</dd>
+</li>
+<dt><strong><a name="name_file" class="item">name_file</a></strong>
+
+<dd>
+<p>Returns the name of the File you used to create this object</p>
+</dd>
+<dd>
+<pre>
+        print $pileup-&gt;name_file();   #prints '/home/macleand/Desktop/pileup_file.txt'</pre>
+</dd>
+</li>
+<dt><strong><a name="get_coverage" class="item">get_coverage(contig, position)</a></strong>
+
+<dd>
+<p>Returns coverage for a single position on a particular contig</p>
+</dd>
+<dd>
+<pre>
+        my $depth = $pileup-&gt;get_coverage('contig1', 124);</pre>
+</dd>
+</li>
+<dt><strong><a name="get_ref_base" class="item">get_ref_base</a></strong>
+
+<dd>
+<p>Returns the reference_base at a particular position on a contig</p>
+</dd>
+<dd>
+<pre>
+        my $ref = $pileup-&gt;get_ref_base('contig1', 345);</pre>
+</dd>
+</li>
+<dt><strong><a name="get_contigs" class="item">get_contigs</a></strong>
+
+<dd>
+<p>Returns list of contigs</p>
+</dd>
+<dd>
+<pre>
+        my @contigs = $pileup-&gt;get_contigs;</pre>
+</dd>
+</li>
+<dt><strong><a name="contig_count" class="item">contig_count</a></strong>
+
+<dd>
+<p>Returns the number of contigs in the pileup.</p>
+</dd>
+<dd>
+<pre>
+        print $pileup-&gt;contig_count();</pre>
+</dd>
+</li>
+<dt><strong><a name="contig_length" class="item">contig_length(contig)</a></strong>
+
+<dd>
+<p>Returns the length of the contig</p>
+</dd>
+<dd>
+<pre>
+        print $pileup-&gt;contig_length('contig34');</pre>
+</dd>
+</li>
+<dt><strong><a name="nt_coverage" class="item">nt_coverage(contig, position)</a></strong>
+
+<dd>
+<p>Returns hash with nucleotides as keys and number of times that nucleotide called at a position on a contig</p>
+</dd>
+<dd>
+<pre>
+        my %coverage = $pileup-&gt;nt_cpverage('contig1', 1234);</pre>
+</dd>
+</li>
+<dt><strong><a name="average_depth" class="item">average_depth</a></strong>
+
+<dd>
+<p>Returns average depth of coverage over all contigs</p>
+</dd>
+<dd>
+<pre>
+        print $pileup-&gt;average_depth();</pre>
+</dd>
+</li>
+<dt><strong><a name="contig_average_depth" class="item">contig_average_depth(contig)</a></strong>
+
+<dd>
+<p>Returns single contig average coverage depth</p>
+</dd>
+<dd>
+<pre>
+        print $pileup-&gt;contig_average_depth('contig1234');</pre>
+</dd>
+</li>
+<dt><strong><a name="total_nucleotides" class="item">total_nucleotides</a></strong>
+
+<dd>
+<p>Returns number of nucleotides in all contigs ie sum of lengths</p>
+</dd>
+<dd>
+<pre>
+        print $pileup-&gt;total_nucleotides();</pre>
+</dd>
+</li>
+<dt><strong><a name="nucleotides_aligned_to_contig" class="item">nucleotides_aligned_to_contig(contig)</a></strong>
+
+<dd>
+<p>Returns the sum of aligned nucleotides at each position in a contig</p>
+</dd>
+<dd>
+<pre>
+        print $pileup-&gt;nucleotides_aligned_to_contig('contig12');</pre>
+</dd>
+</li>
+<dt><strong><a name="nucleotides_aligned" class="item">nucleotides_aligned</a></strong>
+
+<dd>
+<p>Returns the sum of nucleotides at each position over all contigs</p>
+</dd>
+<dd>
+<pre>
+        print $pileup-&gt;nucleotides_aligned();</pre>
+</dd>
+</li>
+<dt><strong><a name="html_pile" class="item">html_pile(contig, direction)</a></strong>
+
+<dd>
+<p>Returns a stringified html version of a single contig for pretty printing. Provide with contig and direction. 'up' will return the
+html so that the 'peaks' of the pileup will point up. 'down' will return the same but pointing down. Together these will allow you to
+to print and compare two pileups over the same contig in one html document. Use this method in conjuction with the <a href="#html_style"><code>html_style()</code></a> method
+and Perl standard CGI module.</p>
+</dd>
+<dd>
+<pre>
+        my $html = $pileup-&gt;html_pile('contig123', 'up');</pre>
+</dd>
+</li>
+<dt><strong><a name="html_style" class="item">html_style(style)</a></strong>
+
+<dd>
+<p>Returns a string that contains CSS to help render the html string from <a href="#html_pile"><code>html_pile()</code></a>. The style argument can be one of 'simple', 'block' or 'difference'
+Simple colours the characters in the string only. Block renders the characters in the string in black and the background in block colour. Difference renders the nucleotides
+that agree with the reference as simple, and those that disagree as block. Use in conjunction with the <a href="#html_pile"><code>html_pile()</code></a> method and CGI standard modules</p>
+</dd>
+<dd>
+<pre>
+        my $style = $pileup-&gt;html_style('difference');</pre>
+</dd>
+</li>
+</dl>
+<p>
+</p>
+<hr />
+<h1><a name="see_also_cgi_">SEE ALSO
+CGI;</a></h1>
+
+</body>
+
+</html>

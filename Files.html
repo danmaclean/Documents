@@ -1,0 +1,90 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Files - a module of File helper methods</title>
+<link rel="stylesheet" href="styles/perldoc.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:_postfix@neige.apple.com" />
+</head>
+
+<body>
+
+
+<!-- INDEX BEGIN -->
+<div name="index">
+<p><a name="__index__"></a></p>
+
+<ul>
+
+	<li><a href="#author">AUTHOR</a></li>
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<li><a href="#methods">METHODS</a></li>
+</ul>
+
+<hr name="index" />
+</div>
+<!-- INDEX END -->
+
+<p>
+</p>
+<h1><a name="author">AUTHOR</a></h1>
+<p>Dan MacLean (<a href="mailto:dan.maclean@tsl.ac.uk">dan.maclean@tsl.ac.uk</a>)</p>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<pre>
+        use FileSysTools::Files;
+        my $dir = '/home/macleand';
+        my @files = Files::get_array_of_files($dir);</pre>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p>The Files module contains routines for carrying out some frequent file related tasks.
+The module does not create objects like some of the other modules, rather its methods are accessed in the manner of subroutines in external files.</p>
+<p>
+</p>
+<hr />
+<h1><a name="methods">METHODS</a></h1>
+<dl>
+<dt><strong><a name="get_array_of_files" class="item">get_array_of_files(dir)</a></strong>
+
+<dd>
+<p>returns an array of the files in the directory dir</p>
+</dd>
+<dd>
+<pre>
+        my $dir = '/home/macleand/Desktop';
+        my @files = Files::get_array_of_files($dir);</pre>
+</dd>
+</li>
+<dt><strong><a name="slurp_list_file_into_hash" class="item">slurp_list_file_into_hash(file)</a></strong>
+
+<dd>
+<p>Takes a file and loads it into a hash, each line in the file becomes a key in the hash</p>
+</dd>
+<dd>
+<pre>
+        my $file = 'myfile';
+        my %hash = Files::slurp_list_file_into_hash($file);</pre>
+</dd>
+</li>
+<dt><strong><a name="strip_whitespace" class="item">strip_whitespace(line)</a></strong>
+
+<dd>
+<p>Removes whitespace from a provided string.</p>
+</dd>
+<dd>
+<pre>
+        my $string = &quot;Do you know the way to San Jose?&quot;;
+        my $new_string = strip_whitespace($string);</pre>
+</dd>
+</li>
+</dl>
+
+</body>
+
+</html>

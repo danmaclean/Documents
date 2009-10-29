@@ -1,0 +1,95 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Stats - a module of frequently used statistical methods</title>
+<link rel="stylesheet" href="styles/perldoc.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:_postfix@neige.apple.com" />
+</head>
+
+<body>
+
+
+<!-- INDEX BEGIN -->
+<div name="index">
+<p><a name="__index__"></a></p>
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#author">AUTHOR</a></li>
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<li><a href="#methods">METHODS</a></li>
+</ul>
+
+<hr name="index" />
+</div>
+<!-- INDEX END -->
+
+<p>
+</p>
+<h1><a name="name">NAME</a></h1>
+<p>Stats - a module of frequently used statistical methods</p>
+<p>
+</p>
+<hr />
+<h1><a name="author">AUTHOR</a></h1>
+<p>Dan MacLean (<a href="mailto:dan.maclean@tsl.ac.uk">dan.maclean@tsl.ac.uk</a>)</p>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<pre>
+        use DanMaths::Stats;
+        my $population_size = 2410;
+        my $proportion_successes_in_population = 0.4;
+        my $attempts = '341';
+        my $succeses = '291';
+        my $p = Stats::hypergeometric($population_size,$proportion_successes_in_population,$attempts,$succeses);</pre>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p>The Stats module contains routines for carrying out some frequently used statistical tests that are not implemented elsewhere.
+The module does not create objects like some of the other modules, rather its methods are accessed in the manner of subroutines in external files.</p>
+<p>
+</p>
+<hr />
+<h1><a name="methods">METHODS</a></h1>
+<dl>
+<dt><strong><a name="hypergeometric" class="item">hypergeometric(n,p,k,r)</a></strong>
+
+<dd>
+<p>Returns one-tailed probability based on the hypergeometric distribution: the probability of witnessing r successes in a sample
+of k items from a pool of size n, with r having prob (proportion) p, sampling without replacement.</p>
+</dd>
+<dd>
+<pre>
+        my $population_size = 2410;
+        my $proportion_successes_in_population = 0.4;
+        my $attempts = '341';
+        my $succeses = '291';
+        my $p = Stats::hypergeometric($population_size,$proportion_successes_in_population,$attempts,$succeses);</pre>
+</dd>
+</li>
+<dt><strong><a name="bonferroni_correct" class="item">bonferroni_correct(p_val, number_of_repeats);</a></strong>
+
+<dd>
+<p>Returns a bonferroni_corrected p value for the provided p value based on the number of times the test was repeated</p>
+</dd>
+<dd>
+<pre>
+        my $p_value = 0.01;
+        my $number_of_repeats = 145;
+        my $bonferroni = Stats::bonferroni_correct($p_value, $number_of_repeats);
+
+</pre>
+</dd>
+</li>
+</dl>
+
+</body>
+
+</html>

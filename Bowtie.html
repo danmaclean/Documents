@@ -111,6 +111,16 @@ soon.</p>
         print $bwt-&gt;alignstart();</pre>
 </dd>
 </li>
+<dt><strong><a name="alignstop" class="item"><code>alignstop()</code></a></strong>
+
+<dd>
+<p>Returns the stop position of the alignment on the reference</p>
+</dd>
+<dd>
+<pre>
+        print $bwt-&gt;alignstop();</pre>
+</dd>
+</li>
 <dt><strong><a name="readseq" class="item"><code>readseq()</code></a></strong>
 
 <dd>
@@ -145,12 +155,23 @@ soon.</p>
 
 <dd>
 <p>Returns a hash describing any mismatches that occured between the read and the reference in this alignment, if no mismatches occur
-returns 0</p>
+returns the string 'None'</p>
 </dd>
 <dd>
 <pre>
-        my %mismatches = $bwt-&gt;mismatches;
-        --more detail Daniel!--</pre>
+        my %mismatches = $bwt-&gt;mismatches;</pre>
+</dd>
+<dd>
+<p>The hash returned has as keys the positions in which the read differs from the reference. The nucleotide number returned is that in the reference 
+DNA, not the position in the read. There are some oddities in the Bowtie output, such as when a read matches the negative strand the mismatch read
+must be read from the opposite end of the read. The hash looks like this...</p>
+</dd>
+<dd>
+<pre>
+        %mismatches{
+                '137' =&gt; {'A' =&gt; 'G'},
+                '124' =&gt; {'C =&gt; 'T'}
+                }</pre>
 </dd>
 </li>
 </dl>

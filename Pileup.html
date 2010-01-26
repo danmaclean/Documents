@@ -4,7 +4,7 @@
 <head>
 <title>Pileup - module that creates object representing maq format pileup files. Will soon include methods for converting bowtie and SOAP
 alignments into the pileup format for easy later analysis.</title>
-<link rel="stylesheet" href="styles/perldoc.css" type="text/css" />
+<link rel="stylesheet" href="../Documents/styles/perldoc.css" type="text/css" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rev="made" href="mailto:_postfix@neige.apple.com" />
 </head>
@@ -21,6 +21,7 @@ alignments into the pileup format for easy later analysis.</title>
 	<li><a href="#author">AUTHOR</a></li>
 	<li><a href="#synopsis">SYNOPSIS</a></li>
 	<li><a href="#description">DESCRIPTION</a></li>
+	<li><a href="#prerequisites">PREREQUISITES</a></li>
 	<li><a href="#methods">METHODS</a></li>
 	<li><a href="#see_also">SEE ALSO</a></li>
 </ul>
@@ -51,23 +52,35 @@ with the actual reads that make up the alignment, like identity or mate pairs.</
 <p>
 </p>
 <hr />
+<h1><a name="prerequisites">PREREQUISITES</a></h1>
+<p>None standard modules required to use Pileup: Bio::SeqIO;  Solexa::Bowtie;</p>
+<p>
+</p>
+<hr />
 <h1><a name="methods">METHODS</a></h1>
 <dl>
 <dt><strong><a name="new" class="item">new(pileup_file)</a></strong>
 
 <dd>
-<p>Creates a new Pileup object. The first time you run this method it creates an index of the file. The index allows it to access the different
-bits describing each contig without running through the whole file. You can save this index by calling the <a href="#pickle"><code>pickle()</code></a> method, which stores
-This method runs for a long time. Try to use it once, the first time you make a file and then use the <a href="#pickle"><code>pickle()</code></a> and <a href="#retrieve_pickle"><code>retrieve_pickle()</code></a>.</p>
+<p>Creates a new Pileup object. This may be from a maq/bwa Pileup file or a bowtie output file and set of reference sequences in fasta format. The -format
+parameter  can be either maq bwa bowtie or bwt and is required. The -file parameter refers to the maq/bwa output file or the bowtie output file. The -refs parameter is only used with bowtie files and
+is required. The first time you run this method it creates an index of the file. The index allows it to access the different
+bits describing each contig without running through the whole file. Having created the index once you can save it and the object by calling the <code>pickle()</code> method, which stores
+This method runs for a long time. Try to use it once, the first time you make a file and then use the <code>pickle()</code> and <a href="#retrieve_pickle"><code>retrieve_pickle()</code></a>.</p>
 </dd>
 <dd>
 <pre>
+        ##for maq files
         $file = '/home/macleand/Desktop/pileup_file.txt'
-        $pileup = new Pileup($file);</pre>
+        $pileup = new Pileup(-file =&gt; $file, -format =&gt; 'maq')
+        
+        ##for bowtie files
+        $file = '/home/macleand/Desktop/bowtie_file.txt'
+        $refs = '/home/macleand/Desktop/contigs.fa'
+        $pileup = new Pileup(-format =&gt; 'bwt', -file =&gt; $file, -refs =&gt; $refs )
+        
+=item pickle(outfile)</pre>
 </dd>
-</li>
-<dt><strong><a name="pickle" class="item">pickle(outfile)</a></strong>
-
 <dd>
 <p>Creates a pickled (binarised version of the Pileup object) Pileup file and writes it to disk.</p>
 </dd>
@@ -165,6 +178,12 @@ pileup object. Alternatively you can use the Perl standard module Storable::retr
         my %coverage = $pileup-&gt;nt_cpverage('contig1', 1234);</pre>
 </dd>
 </li>
+<dt><strong><a name="get_consensus" class="item">get_consensus(contig, position)</a></strong>
+
+<dd>
+<p>Returns a string of the consensus nucleotide, a / separated list if there is ambiguity and 'none' if there is no coverage</p>
+</dd>
+</li>
 <dt><strong><a name="average_depth" class="item">average_depth</a></strong>
 
 <dd>
@@ -237,7 +256,9 @@ that agree with the reference as simple, and those that disagree as block. Use i
 </dd>
 <dd>
 <pre>
-        my $style = $pileup-&gt;html_style('difference');</pre>
+        my $style = $pileup-&gt;html_style('difference');
+
+</pre>
 </dd>
 </li>
 </dl>

@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Fastq - module that creates object representing fastq sequence files</title>
-<link rel="stylesheet" href="styles/perldoc.css" type="text/css" />
+<link rel="stylesheet" href="../Documents/styles/perldoc.css" type="text/css" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rev="made" href="mailto:_postfix@neige.apple.com" />
 </head>
@@ -112,6 +112,15 @@ automatically. Further methods will be created soon.</p>
 <dd>
 <pre>
         print $fastq-&gt;quals;   #prints '!@£$%^&amp;*(()_++_)*'</pre>
+</dd>
+</li>
+<dt><strong><a name="split" class="item"><code>split()</code></a></strong>
+
+<dd>
+<p>Splits the read and quals in half and returns two new fastq objects with _1 and _2 appended to the ids</p>
+</dd>
+<dd>
+<p>my ($split1,$split2) = $fastq-&gt;split;</p>
 </dd>
 </li>
 </dl>

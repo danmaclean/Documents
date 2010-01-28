@@ -3,17 +3,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Fastq - module that creates object representing fastq sequence files</title>
-<link rel="stylesheet" href="../Documents/styles/perldoc.css" type="text/css" />
+<link rel="stylesheet" href="~/perl_modules/Documents/styles/perldoc.css" type="text/css" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:_postfix@neige.apple.com" />
+<link rev="made" href="mailto:root@localhost" />
 </head>
 
 <body>
 
-
-<!-- INDEX BEGIN -->
-<div name="index">
 <p><a name="__index__"></a></p>
+<!-- INDEX BEGIN -->
 
 <ul>
 
@@ -24,11 +22,9 @@
 	<li><a href="#methods">METHODS</a></li>
 	<li><a href="#see_also">SEE ALSO</a></li>
 </ul>
-
-<hr name="index" />
-</div>
 <!-- INDEX END -->
 
+<hr />
 <p>
 </p>
 <h1><a name="name">NAME</a></h1>
@@ -60,7 +56,7 @@ automatically. Further methods will be created soon.</p>
 <hr />
 <h1><a name="methods">METHODS</a></h1>
 <dl>
-<dt><strong><a name="new" class="item">new(id,sequence,quality_id,quality_scores)</a></strong>
+<dt><strong><a name="item_new"><code>new(id,sequence,quality_id,quality_scores)</code></a></strong>
 
 <dd>
 <p>Creates a new Fastq object</p>
@@ -75,7 +71,7 @@ automatically. Further methods will be created soon.</p>
         $fastq = new Fastq($id, $seq, $qual_id, $qual);</pre>
 </dd>
 </li>
-<dt><strong><a name="id" class="item"><code>id()</code></a></strong>
+<dt><strong><a name="item_id"><code>id()</code></a></strong>
 
 <dd>
 <p>Returns the id of the Fastq object</p>
@@ -94,7 +90,7 @@ automatically. Further methods will be created soon.</p>
         print $fastq-&gt;seq;   #prints 'ATGCATGCNNNATGCATGC'</pre>
 </dd>
 </li>
-<dt><strong><a name="qual_id" class="item"><code>qual_id()</code></a></strong>
+<dt><strong><a name="item_qual_id"><code>qual_id()</code></a></strong>
 
 <dd>
 <p>Returns the quality line id of the Fastq object</p>
@@ -104,7 +100,7 @@ automatically. Further methods will be created soon.</p>
         print $fastq-&gt;qual_id;   #prints '+LANE_ID_CO_ORD_NUMBER'</pre>
 </dd>
 </li>
-<dt><strong><a name="quals" class="item"><code>quals()</code></a></strong>
+<dt><strong><a name="item_quals"><code>quals()</code></a></strong>
 
 <dd>
 <p>Returns the quality score line of the Fastq object</p>
@@ -114,7 +110,14 @@ automatically. Further methods will be created soon.</p>
         print $fastq-&gt;quals;   #prints '!@£$%^&amp;*(()_++_)*'</pre>
 </dd>
 </li>
-<dt><strong><a name="split" class="item"><code>split()</code></a></strong>
+<dt><strong><a name="item_quals_to_sanger">quals_to_sanger</a></strong>
+
+<dd>
+<p>Alters the quality score of the line to the sanger-fastq standard ***only use if your read is already illumina-fastq standard***
+That is from post pipeline version 1.3.</p>
+</dd>
+</li>
+<dt><strong><a name="item_split"><code>split()</code></a></strong>
 
 <dd>
 <p>Splits the read and quals in half and returns two new fastq objects with _1 and _2 appended to the ids</p>
